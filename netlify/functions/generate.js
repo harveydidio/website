@@ -1,16 +1,7 @@
-export async function handler(event) {
+exports.handler = async (event) => {
   try {
-    // Get data from frontend
     const { prompt } = JSON.parse(event.body || "{}");
 
-    if (!prompt) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "Missing prompt" })
-      };
-    }
-
-    // Call Claude API
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -32,28 +23,19 @@ export async function handler(event) {
 
     const data = await response.json();
 
-    // Handle API errors
-    if (!response.ok) {
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({
-          error: data.error?.message || "Claude API error"
-        })
-      };
-    }
-
-    // Return success
     return {
       statusCode: 200,
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        content: data.content
+      })
     };
 
   } catch (err) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: err.message || "Server error"
+        error: err.message
       })
     };
   }
-}
+};

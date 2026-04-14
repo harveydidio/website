@@ -304,6 +304,8 @@
     body: JSON.stringify({ prompt })
   });
 
+  document.getElementById("resultCard").classList.remove("hidden");
+  
   const data = await response.json();
 
 console.log("FULL RESPONSE:", data);

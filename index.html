@@ -300,16 +300,15 @@
 
   const prompt = `You are the owner of a ${bizType}. ${review}. Reply in a ${tone} tone.`;
 
-  try {
-    btn.disabled = true;
-    resultCard.classList.remove('hidden');
-    resultBox.textContent = "Generating...";
+console.log("SENDING PROMPT:", prompt);
 
-    const response = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
-    });
+const response = await fetch('/.netlify/functions/generate', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ prompt })
+});
 
     const data = await response.json();
     console.log("DEBUG RESPONSE:", data);

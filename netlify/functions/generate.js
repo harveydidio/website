@@ -1,4 +1,3 @@
-console.log("FUNCTION STARTED");
 exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body || "{}");
@@ -11,20 +10,40 @@ exports.handler = async (event) => {
       };
     }
 
-    // (Claude API goes here later)
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.CLAUDE_API_KEY,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-3-haiku-20240307",
+        max_tokens: 300,
+        messages: [
+          {
+            role: "user",
+            content: prompt
+          }
+        ]
+      })
+    });
+
+    const data = await response.json();
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        ok: true,
-        received: { prompt }
+        content: data.content
       })
     };
 
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message })
+      body: JSON.stringify({
+        error: err.message
+      })
     };
   }
 };

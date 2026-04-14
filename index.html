@@ -319,7 +319,6 @@ if (data.error) {
   resultBox.textContent = data.content?.[0]?.text || 'No response';
 }
 
-        const data = await response.json();
 
         if (data.error) {
           resultBox.textContent = 'Error: ' + data.error.message;

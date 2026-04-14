@@ -312,9 +312,10 @@
     });
 
     const data = await response.json();
+    console.log("DEBUG RESPONSE:", data);
 
-    resultBox.textContent =
-      data.content?.[0]?.text || data.error || "No response";
+    document.getElementById('resultBox').textContent =
+      JSON.stringify(data, null, 2);
 
   } catch (err) {
     console.error(err);

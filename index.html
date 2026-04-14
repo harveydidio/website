@@ -287,7 +287,7 @@
   </div>
 
   <script>
-    async function generateReply() {
+    window.generateReply = async function () {
       const review = document.getElementById('reviewText').value.trim();
       const bizType = document.getElementById('bizType').value;
       const tone = document.getElementById('tone').value;

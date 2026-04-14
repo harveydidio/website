@@ -288,40 +288,27 @@
 
   <script>
     window.generateReply = async function () {
-  console.log("clicked");
+
+  console.log("BUTTON CLICKED");
 
   const review = document.getElementById('reviewText').value;
   const bizType = document.getElementById('bizType').value;
   const tone = document.getElementById('tone').value;
 
-  const btn = document.getElementById('generateBtn');
-  const resultBox = document.getElementById('resultBox');
-  const resultCard = document.getElementById('resultCard');
-
   const prompt = `You are the owner of a ${bizType}. ${review}. Reply in a ${tone} tone.`;
 
-console.log("SENDING PROMPT:", prompt);
+  const response = await fetch('/.netlify/functions/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prompt })
+  });
 
-const response = await fetch('/.netlify/functions/generate', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ prompt })
-});
+  const data = await response.json();
 
-    const data = await response.json();
-    console.log("DEBUG RESPONSE:", data);
-
-    document.getElementById('resultBox').textContent =
-      JSON.stringify(data, null, 2);
-
-  } catch (err) {
-    console.error(err);
-    resultBox.textContent = "Error occurred";
-  }
-
-  btn.disabled = false;
+  document.getElementById('resultBox').textContent =
+    JSON.stringify(data, null, 2);
 };
   </script>
 

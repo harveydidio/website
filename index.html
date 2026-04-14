@@ -288,36 +288,27 @@
 
   <script>
     window.generateReply = async function () {
-      const review = document.getElementById('reviewText').value.trim();
-      const bizType = document.getElementById('bizType').value;
-      const tone = document.getElementById('tone').value;
-      const btn = document.getElementById('generateBtn');
-      const resultCard = document.getElementById('resultCard');
-      const resultBox = document.getElementById('resultBox');
+  console.log("clicked");
 
-    
-      if (!review) {
-        alert('Please paste a customer review.');
-        return;
-      }
+  const review = document.getElementById('reviewText').value;
+  const bizType = document.getElementById('bizType').value;
+  const tone = document.getElementById('tone').value;
 
-      btn.disabled = true;
-      btn.textContent = 'Generating...';
-      resultCard.classList.remove('hidden');
-      resultBox.textContent = 'Writing your reply...';
+  const prompt = `You are the owner of a ${bizType}. ${review}. Reply in a ${tone} tone.`;
 
-      const response = await fetch('/.netlify/functions/generate', {
-  method: 'POST',
-  body: JSON.stringify({ prompt })
-});
+  const response = await fetch('/.netlify/functions/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prompt })
+  });
 
-const data = await response.json();
+  const data = await response.json();
 
-if (data.error) {
-  resultBox.textContent = 'Error: ' + data.error;
-} else {
-  resultBox.textContent = data.content?.[0]?.text || 'No response';
-}
+  document.getElementById('resultBox').textContent =
+    data.content?.[0]?.text || data.error || "No response";
+};
 
 
         if (data.error) {

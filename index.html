@@ -307,9 +307,7 @@
 
     const response = await fetch('/.netlify/functions/generate', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt })
     });
 
@@ -320,19 +318,11 @@
 
   } catch (err) {
     console.error(err);
-    resultBox.textContent = "Something went wrong.";
+    resultBox.textContent = "Error occurred";
   }
 
   btn.disabled = false;
 };
-
-    function copyReply(btn) {
-      const text = document.getElementById('resultBox').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy reply', 1800);
-      });
-    }
   </script>
 
 </body>

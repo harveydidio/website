@@ -306,8 +306,10 @@
 
   const data = await response.json();
 
-  document.getElementById('resultBox').textContent =
-    JSON.stringify(data, null, 2);
+console.log("FULL RESPONSE:", data);
+
+document.getElementById('resultBox').textContent =
+  JSON.stringify(data, null, 2);
 };
   </script>
 

@@ -31,14 +31,17 @@ exports.handler = async (event) => {
 
     const data = await response.json();
 
+    console.log("CLAUDE RESPONSE:", data);
+
+    // 🔥 IMPORTANT: return full response so we can see errors
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        content: data.content
-      })
+      body: JSON.stringify(data)
     };
 
   } catch (err) {
+    console.log("ERROR:", err);
+
     return {
       statusCode: 500,
       body: JSON.stringify({
